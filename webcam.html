@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+ <meta name="author" content="rogalmic">
+ <meta name="keywords" content="">
+ <meta name="robots" content="index,follow,all" />
+ 
+ <title>WebCam</title> 
+
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+ <script type="text/javascript">
+   function setCookie(key, value) {
+     var expires = new Date();
+     expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+     document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+   }
+
+   function getCookie(key) {
+     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+     return keyValue ? keyValue[2] : null;
+   }
+   var arr1 = [];
+	 var json_str1 = JSON.stringify(arr1);
+	 setCookie('WebCams', json_str1);
+		
+   $( document ).ready(function() { 	
+	
+	 var json_str = getCookie('WebCams');
+	 var arr = arr1; //JSON.parse(json_str);	
+	
+   for(var i =0; i< 2; i++){
+     $('#main').append($('<img/>', { id: "r" + i, "class" : "snap", "src" : arr[i], "alt" : arr[i]}))
+   }
+	
+   setInterval(function(){
+    $('img.snap').each(function() {
+     var jqt = $(this);
+     var src = jqt.attr('alt');
+     src += '&_ts=' + new Date().getTime();
+     jqt.attr('src',src);
+    });
+   },2000);
+ });
+ </script> 
+ <style>
+  .snap {height: 300px;} 
+  .full {height: 100%; width: 100%;} 
+ </style>
+</head>
+
+<body>
+<div id="container">
+<div id="main">
+
+</div>
+</div>
+</body>
+</html>
